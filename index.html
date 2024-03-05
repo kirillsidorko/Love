@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles.css">
+<script src="script.js"></script>
+<title>True Love Calculator</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  .question { margin-bottom: 20px; }
+  label { margin-right: 10px; }
+  #results { margin-top: 20px; }
+</style>
+</head>
+<body>
+<h2>True Love Calculator</h2>
+<p>Answer the questions below to find out your compatibility score.</p>
+
+<form id="loveQuiz">
+  <div class="question">
+    <p>1. Broccoli is delicious.</p>
+    <!-- Options for question 1 -->
+    <label><input type="radio" name="q1" value="1"> Strongly Disagree</label>
+    <label><input type="radio" name="q1" value="2"> Disagree</label>
+    <label><input type="radio" name="q1" value="3"> Neutral</label>
+    <label><input type="radio" name="q1" value="4"> Agree</label>
+    <label><input type="radio" name="q1" value="5"> Strongly Agree</label>
+  </div>
+  <!-- Repeat the block above for questions 2 through 5 with appropriate adjustments -->
+
+  <button type="submit">Calculate Compatibility</button>
+</form>
+
+<div id="results"></div>
+
+<script>
+document.getElementById('loveQuiz').addEventListener('submit', function(e) {
+  e.preventDefault(); // Prevent the form from submitting normally
+
+  const desiredAnswers = {q1: 1, q2: 5, q3: 3, q4: 2, q5: 4}; // Example desired answers
+  let score = 100;
+  let totalDifference = 0;
+
+  // Loop through each question to calculate compatibility
+  for (const question in desiredAnswers) {
+    const userAnswer = parseInt(document.querySelector(`input[name="${question}"]:checked`)?.value);
+    if (!userAnswer) {
+      alert('Please answer all questions.');
+      return;
+    }
+    totalDifference += Math.abs(userAnswer - desiredAnswers[question]);
+  }
+
+  score -= totalDifference * 5; // Adjust scoring as needed
+
+  // Display results
+  const resultsDiv = document.getElementById('results');
+  resultsDiv.innerHTML = `<p>Your compatibility score is: ${score}%</p>`;
+  if (score >= 80) {
+    resultsDiv.innerHTML += `<p><strong>True Love!</strong></p>`;
+  } else if (score >= 50) {
+    resultsDiv.innerHTML += `<p>Possible friends.</p>`;
+  } else {
+    resultsDiv.innerHTML += `<p>Run away!</p>`;
+  }
+});
+</script>
+</body>
+</html>
